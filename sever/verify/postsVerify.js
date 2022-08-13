@@ -28,8 +28,15 @@ class PostVerify {
 
     verifyPassword = async (userId, password) => {
         const UserInfo = await User.findOne({ where: { userId } });
-        console.log(UserInfo.password);
         if (UserInfo.password === password) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+    exsisPost = async (postId) => {
+        const exsisPost = await Post.findOne({ where: { postId } });
+        if (exsisPost) {
             return true;
         } else {
             return false;

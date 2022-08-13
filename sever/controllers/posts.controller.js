@@ -54,19 +54,27 @@ class PostsController {
         // const { userId } = res.locals;
         const userId = 1; // 테스트 용
 
-        const verifyPost = await this.postVerify.veerifyPost(userId, postId);
+        const exsisPost = await this.postVerify.exsisPost(postId);
 
-        const exsisConTentTile = await this.postVerify.veerifyUpdate(
-            title,
-            newContent
-        );
-        console.log(verifyPost);
+        if (!exsisPost) {
+            console.log(exsisPost);
+            return res.status(400).json({
+                errorMessage: "없는 게시글 입니다.",
+            });
+        }
+
+        const verifyPost = await this.postVerify.veerifyPost(userId, postId);
 
         if (!verifyPost) {
             return res.status(400).json({
                 errorMessage: "본인 게시글이 아닙니다.",
             });
         }
+        const exsisConTentTile = await this.postVerify.veerifyUpdate(
+            title,
+            newContent
+        );
+
         if (!exsisConTentTile) {
             return res.status(400).json({
                 errorMessage: "입력값을 확인해주세요",
@@ -77,24 +85,34 @@ class PostsController {
 
         res.status(201).json();
     };
+
     deletePost = async (req, res) => {
         const { postId } = req.params;
         const { password } = req.body;
         // const { userId } = res.locals;
         const userId = 1; // 테스트 용
 
-        const verifyPost = await this.postVerify.veerifyPost(userId, postId);
+        const exsisPost = await this.postVerify.exsisPost(postId);
 
-        const verifyPassword = await this.postVerify.verifyPassword(
-            userId,
-            password
-        );
+        if (!exsisPost) {
+            console.log(exsisPost);
+            return res.status(400).json({
+                errorMessage: "없는 게시글 입니다.",
+            });
+        }
+
+        const verifyPost = await this.postVerify.veerifyPost(userId, postId);
 
         if (!verifyPost) {
             return res.status(400).json({
                 errorMessage: "본인 게시글이 아닙니다.",
             });
         }
+
+        const verifyPassword = await this.postVerify.verifyPassword(
+            userId,
+            password
+        );
 
         if (!verifyPassword) {
             return res.status(400).json({
