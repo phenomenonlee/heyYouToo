@@ -7,31 +7,93 @@ class UsersService {
     usersRepository = new UsersRepository();
 
     //회원가입
-    createUser = async (id, nickName) => {
-        await this.usersRepository.createUser(id, pw, nickName);
-        return {
-            Message: "회원가입을 축하드립니다.",
+    createUser = async (id, password, confirmPw,nickName) => {
+        if (!id || !password || !confirmPw ||!nickName) {
+          return { status: 400, message: "항목을 모두 입력해주세요." };
         };
-        
-       
+    //아이디 이메일정규식, 비밀번호 정규식
+    const checkid = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/.test(id);
+    if (!checkid) {
+        console.log(checkid)
+      return { status: 400, message: "이메일형식으로 입력하세요." };
+    } else if (password.length < 4) {
+      return { status: 400, message: "비밀번호 4자리 이상 입력하세요." };
+    }
+    //아이디 중복검사
+    const existsid = await this.usersRepository.findUserByid(id);
+    console.log(existsid)
+    if (existsid) {
+      return { status: 400, message: "이미 사용중인 아이디입니다." };
     };
-    //로그인
-    loginUser = async (res, id, password) => {
-        const signinUserData = await this.usersRepository.loginUser(id, password);
+    //닉네임 중복검사
+    const existsnickName = await this.usersRepository.findUserBynN(nickName);
+    console.log(existsnickName)
+    if (existsnickName) {
+      return { status: 400, message: "이미 사용중인 닉네임입니다." };
+    }
+    
+    //아이디 닉네임 동일성 검사
+    if (password.includes(id)) {
+        return { status: 400, message: "아이디와 비밀번호가 동일합니다." };
+      };
 
-        const token = jwt.sign(
-            {
-                userId: signinUserData[0]["userId"],
-                nickName: signinUserData[0]["nickName"],
-            },
-            "hohoho"
+    //비밀번호 일치여부
+    if (password !== confirmPw) {
+        return { status: 400, message: "비밀번호와 비밀번호 확인란이 다릅니다." };
+      }
+    
+
+      await this.usersRepository.createUser(
+        id,
+        password,
+        nickName
+      );
+      console.log(id,nickName)
+      return { status: 201, message: '회원 가입 성공' };
+  
+    };
+
+   
+    //로그인
+    loginUser = async (id, password) => {
+        if (!id || !password) {
+          return { status: 400, message: "Input value is empty" };
+        }
+    
+        const loginUserdata = await this.usersRepository.findUserLogin(
+          id,
+          password
         );
+        if (!loginUserdata) {
+          return { status: 400, message: "아이디 또는 비밀번호가 다릅니다." };
+        }
+        
+        console.log(loginUserdata)
+        const token = jwt.sign({
+            userId: loginUserdata.userId,
+            nickName: loginUserdata.nickName }, "hohoho")
+        return { status: 201, message: '로그인 성공' , token};
+    };
+
+
+
+    //로그인
+    // loginUser = async (res, id, password) => {
+    //     const signinUserData = await this.usersRepository.loginUser(id, password);
+
+    //     const token = jwt.sign(
+    //         {
+    //             userId: signinUserData[0]["userId"],
+    //             nickName: signinUserData[0]["nickName"],
+    //         },
+    //         "hohoho"
+    //     );
        
 
-        return token;
+    //     return token;
 
 
-    };    
+    // };    
 }
 
 module.exports = UsersService;
