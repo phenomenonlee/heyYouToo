@@ -9,7 +9,7 @@ const Detail = () => {
   return (
     <>
     <Layout>
-          {/* <Header /> (Fix) */}
+          {/* <Header />  */}
       <div><h1 onClick={() => {
         navigate("/main")
       }}>🌈</h1>
