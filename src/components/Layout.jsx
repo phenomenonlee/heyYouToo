@@ -7,6 +7,8 @@ const Layout = (props) => {
 export default Layout;
 
 const SLayout = styled.section`
+  background-color: #ffffff;
+
   position: relative;
   max-width: 700px;
   height: 100vh;
