@@ -5,15 +5,15 @@ const CommentsController = require("../controllers/comments.controller");
 const commentsController = new CommentsController();
 
 // 댓글 조회
-router.get("/:postId", commentsController /* .함수이름 */);
+router.get("/:postId");
 
 //댓글 작성
-router.post("/:postId", commentsController);
+router.post("/:postId");
 
 // 댓글 수정
-router.patch("/:postId/:commentId", commentsController);
+router.patch("/:postId/:commentId");
 
 // 댓글 삭제
-router.delete("/:postId/:commentId", commentsController);
+router.delete("/:postId/:commentId");
 
 module.exports = router;
