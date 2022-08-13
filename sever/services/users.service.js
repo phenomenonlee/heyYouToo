@@ -74,26 +74,6 @@ class UsersService {
             nickName: loginUserdata.nickName }, "hohoho")
         return { status: 201, message: '로그인 성공' , token};
     };
-
-
-
-    //로그인
-    // loginUser = async (res, id, password) => {
-    //     const signinUserData = await this.usersRepository.loginUser(id, password);
-
-    //     const token = jwt.sign(
-    //         {
-    //             userId: signinUserData[0]["userId"],
-    //             nickName: signinUserData[0]["nickName"],
-    //         },
-    //         "hohoho"
-    //     );
-       
-
-    //     return token;
-
-
-    // };    
-}
+};
 
 module.exports = UsersService;
