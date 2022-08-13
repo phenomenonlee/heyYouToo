@@ -10,15 +10,15 @@ const Signup = () => {
       <SingUpBoxStyle>
         <ContentStyle>
         <EmailCheckStyle>
-        <InputStyle type={"text"} placeholder={"ex22@gef.com"}/>
+        <input type={"text"} placeholder={"ex22@gef.com"}/>
         <button>중복확인</button>
         </EmailCheckStyle>
-        <InputStyle type={"text"} placeholder={"닉네임"}/>
-        <InputStyle type={"text"} placeholder={"비밀번호"}/>
-        <InputStyle type={"text"} placeholder={"비밀번호 재입력"}/>
+        <input type={"text"} placeholder={"닉네임"}/>
+        <input type={"text"} placeholder={"비밀번호"}/>
+        <input type={"text"} placeholder={"비밀번호 재입력"}/>
         </ContentStyle>
         <ButtonGroup>
-        <Button>회원가입 버튼</Button>
+        <button>회원가입 버튼</button>
         <CanButton>취소</CanButton>
         </ButtonGroup>
       </SingUpBoxStyle>
@@ -44,9 +44,17 @@ const ContainerStyle = styled.div`
   border-radius: 0.3rem;
   background: linear-gradient(#9db8bf, #9ccddb5e);
 `;
+
 const ContentStyle = styled.div`
   display: flex;
   flex-direction: column;
+  input {
+    border: 2px solid white;
+    border-radius: 5px;
+    margin: 10px 20px;
+    height: 35px;
+    width: 15em;
+  }
 `;
 
 const SingUpBoxStyle = styled.div`
@@ -62,26 +70,19 @@ const EmailCheckStyle = styled.div`
   display: flex;
 `;
 
-
-const InputStyle = styled.input`
-  border: 2px solid white;
-  border-radius: 5px;
-  margin: 10px 20px;
-  height: 35px;
-  width: 15em;
-`;
-
 const ButtonGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
   gap: 10px;
-`;
-const Button = styled.button`
+
+  button {
   width: 200px;
   height: 20px;
+  }
 `;
-const CanButton = styled(Button)`
+
+const CanButton = styled.button`
   color: tomato;
   border-color: tomato;
 `;
