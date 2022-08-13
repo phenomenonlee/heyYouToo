@@ -1,13 +1,37 @@
-const { Post, Like } = require();
+const { Post } = require("../../models");
 
 class PostsRepositroy {
-    createPost = async (secretKey, title, content, nickname, userId) => {
+    findAllPost = async () => {
+        const allPost = await Post.findAll();
+
+        return allPost;
+    };
+
+    createPost = async (hashpassword, title, content, nickname, userId) => {
         await Post.create({
-            secretKey,
+            secretkey: hashpassword,
             title,
             content,
             nickname,
             userId,
+        });
+    };
+
+    updatePost = async (title, newContent, postId) => {
+        await Post.update(
+            {
+                title,
+                content: newContent,
+            },
+            {
+                where: { postId },
+            }
+        );
+    };
+
+    deletePost = async (postId) => {
+        await Post.destroy({
+            where: { postId },
         });
     };
 }
