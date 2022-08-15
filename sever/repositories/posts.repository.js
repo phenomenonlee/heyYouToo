@@ -1,10 +1,19 @@
-const { Post, Like } = require("../../models");
+const { Post, Like, Comment } = require("../../models");
 
 class PostsRepositroy {
     findAllPost = async () => {
-        const allPost = await Post.findAll();
+        let findAllPostLike = [];
 
-        return allPost;
+        const allPostData = await Post.findAll();
+
+        for (let i = 0; i < allPostData.length; i++) {
+            let allPostLike = await Like.findAll({
+                where: { postId: allPostData[i].postId },
+            });
+            findAllPostLike.push(allPostLike.length);
+        }
+
+        return { allPostData, findAllPostLike };
     };
 
     createPost = async (hashpassword, title, content, nickname, userId) => {
@@ -33,6 +42,9 @@ class PostsRepositroy {
         await Post.destroy({
             where: { postId },
         });
+        await Comment.destroy({ where: { postId } });
+
+        await Like.destroy({ where: { postId } });
     };
 
     findOnePost = async (postId) => {

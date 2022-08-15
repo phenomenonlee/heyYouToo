@@ -29,11 +29,10 @@ class PostVerify {
 
     verifyPassword = async (userId, password) => {
         const UserInfo = await User.findOne({ where: { userId } });
-        if (UserInfo.password === password) {
-            return true;
-        } else {
-            return false;
-        }
+
+        const validPassword = await bcrypt.compare(password, UserInfo.password);
+
+        return validPassword;
     };
     exsisPost = async (postId) => {
         const exsisPost = await Post.findOne({ where: { postId } });

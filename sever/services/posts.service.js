@@ -1,21 +1,21 @@
 const PostsRepositroy = require("../repositories/posts.repository");
 const bcrypt = require("bcrypt");
-const { post } = require("../routes/posts.routes");
 
 class PostsService {
     postsRepositroy = new PostsRepositroy();
 
     findAllPost = async () => {
         const allPost = await this.postsRepositroy.findAllPost();
+        const { allPostData, findAllPostLike } = allPost;
 
-        return allPost
-            .map((curV) => {
+        return allPostData
+            .map((curV, index) => {
                 return {
                     postId: curV.postId,
                     title: curV.title,
                     nickname: curV.nickname,
                     createdAt: curV.createdAt,
-                    like: null,
+                    like: findAllPostLike[index],
                 };
             })
             .sort((a, b) => {
@@ -91,7 +91,7 @@ class PostsService {
                 };
             })
             .sort((a, b) => {
-                return b.createdAt - a.createdAt;
+                return b.like - a.like;
             });
     };
 }

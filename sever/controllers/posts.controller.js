@@ -23,7 +23,7 @@ class PostsController {
     createPost = async (req, res) => {
         const { secretKey, title, content } = req.body;
         // const { nickname, userId } = res.locals;
-        const { nickname, userId } = { nickname: "hello", userId: 2 }; // 테스트 용
+        const { nickname, userId } = { nickname: "seok21", userId: 9 }; // 테스트 용
 
         const exsisBody = await this.postVerify.veerifyBody(
             secretKey,
@@ -89,7 +89,7 @@ class PostsController {
         const { postId } = req.params;
         const { password } = req.body;
         // const { userId } = res.locals;
-        const userId = 1; // 테스트 용
+        const userId = 9; // 테스트 용
 
         const exsisPost = await this.postVerify.exsisPost(postId);
 
@@ -166,7 +166,7 @@ class PostsController {
     postUnlike = async (req, res) => {
         const { postId } = req.params;
         // const { userId } = res.locals;
-        const userId = 3;
+        const userId = 2;
 
         const exsisPost = await this.postVerify.exsisPost(postId);
 
