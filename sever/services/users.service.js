@@ -1,6 +1,7 @@
 const UsersRepository = require("../repositories/users.repository");
 const jwt = require("jsonwebtoken");
-
+const bcrypt = require("bcrypt");
+const { User } = require("../../models");
 
 
 class UsersService {
@@ -12,13 +13,13 @@ class UsersService {
           return { status: 400, message: "항목을 모두 입력해주세요." };
         };
     //아이디 이메일정규식, 비밀번호 정규식
-    const checkid = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/.test(id);
-    if (!checkid) {
-        console.log(checkid)
+    const emailcheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/.test(id);
+    if (!emailcheck) {
+        console.log(emailcheck)
       return { status: 400, message: "이메일형식으로 입력하세요." };
     } else if (password.length < 4) {
       return { status: 400, message: "비밀번호 4자리 이상 입력하세요." };
-    }
+    };
     //아이디 중복검사
     const existsid = await this.usersRepository.findUserByid(id);
     console.log(existsid)
@@ -59,15 +60,24 @@ class UsersService {
         if (!id || !password) {
           return { status: 400, message: "Input value is empty" };
         }
-    
-        const loginUserdata = await this.usersRepository.findUserLogin(
+        //아이디 확인
+        const loginUserdata = await this.usersRepository.findUserId(
           id,
-          password
         );
         if (!loginUserdata) {
           return { status: 400, message: "아이디 또는 비밀번호가 다릅니다." };
         }
+        const hashpassword = await User.findOne({ where: { id:loginUserdata } });
+        const validPassword = await bcrypt.compare(
+            password,
+            hashpassword.password
+        );
+        if (!validPassword){
+          return { status: 400, message: "아이디 또는 비밀번호가 다릅니다." };
+        };
         
+        
+    
         console.log(loginUserdata)
         const token = jwt.sign({
             userId: loginUserdata.userId,

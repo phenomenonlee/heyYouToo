@@ -1,5 +1,5 @@
 const { User } = require("../../models");
-
+const bcrypt = require("bcrypt")
 
 class UsersRepository {
     findAllUser = async () => {
@@ -10,13 +10,21 @@ class UsersRepository {
         return users;
     };
     
-    findUserLogin = async (id, password) => {
-        const user = await User.findOne({
-            where:{id,password}
+    findUserId = async (id) => {
+        const Id = await User.findOne({
+            where:{id}
         });
     
-        return user;
+        return Id.id;
     };
+
+    // findUserPassword = async (password) => {
+    //     const Password = await User.findOne({
+    //         where: {password}
+    //     });
+
+    //     return Password;
+    // }
     
     findUserByid = async (id) => {
         const user = await User.findOne({
@@ -36,11 +44,16 @@ class UsersRepository {
     
     
     
+    
+    
     createUser = async (id, password, nickName) => {
+        const salt = await bcrypt.genSalt(10);
+        const hashpassword = await bcrypt.hash(password, salt);
+        
         const user = await User.create({
             id,
             nickName,
-            password
+            password:hashpassword
         });
     
         return user;

@@ -16,14 +16,13 @@ module.exports = (req, res, next)=> {
     
     try {
         
-        const {userId} = jwt.verify(tokenValue, "hohoho");
+        const {user} = jwt.verify(tokenValue, "hohoho");
         
-        User.findByPk(userId)
         
-        .then((user) => {
-            res.locals.user = user;
-            
-        }); next();
+            res.locals.userid = user.userId;
+            res.locals.nickName = user.nickName;
+        
+        next();
         
     } catch (error) {
     res.status(401).send ({

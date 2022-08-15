@@ -1,5 +1,6 @@
 const UsersService = require("../services/users.service");
 
+
 class UsersController {
     usersService = new UsersService();
 
@@ -21,11 +22,18 @@ class UsersController {
 
     //로그인
     loginUser = async (req, res, next) => {
+        const  cookie  = req.cookies
+        if (cookie.Bearer) {
+            res.status(400).send({
+                errorMessage: "이미 로그인 되어 있습니다. ",
+            });
+            return;
+        }
         const { id, password } = req.body;
-    
+        
         const response = await this.usersService.loginUser(id, password);
+        
         res.cookie('Bearer',response.token,{maxAge: 180000})
-    
         res
           .status(response.status)
           .json(response.message);
