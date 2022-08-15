@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     //쿠키
     if (!cookies.token) {
         res.status(400).json({
-            errorMessage: `${req.cookies}`,
+            errorMessage: cookies,
         });
         return;
     }
