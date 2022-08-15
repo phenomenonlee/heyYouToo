@@ -66,7 +66,7 @@ class UsersService {
         );
         if (!loginUserdata) {
           return { status: 400, message: "아이디 또는 비밀번호가 다릅니다." };
-        }
+        };
         const hashpassword = await User.findOne({ where: { id:loginUserdata } });
         const validPassword = await bcrypt.compare(
             password,

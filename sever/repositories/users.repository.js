@@ -32,7 +32,7 @@ class UsersRepository {
         });
     
         return user;
-    }
+    };
     
     findUserBynN = async (nickName) => {
         const user = await User.findOne({

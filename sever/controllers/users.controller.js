@@ -28,7 +28,7 @@ class UsersController {
                 errorMessage: "이미 로그인 되어 있습니다. ",
             });
             return;
-        }
+        };
         const { id, password } = req.body;
         
         const response = await this.usersService.loginUser(id, password);
