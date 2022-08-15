@@ -82,7 +82,7 @@ class UsersService {
         const token = jwt.sign({
             userId: loginUserdata.userId,
             nickName: loginUserdata.nickName }, "hohoho")
-        return { status: 201, message: '로그인 성공' , token};
+        return {token};
     };
 };
 
