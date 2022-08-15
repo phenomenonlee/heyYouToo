@@ -2,12 +2,11 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
     const cookies = req.cookies;
-    console.log("123456", cookies);
 
     //쿠키
     if (!cookies.token) {
-        res.status(400).send({
-            errorMessage: "123로그인 후 사용하세요.",
+        res.status(400).json({
+            errorMessage: `${req.cookies}`,
         });
         return;
     }
@@ -19,7 +18,7 @@ module.exports = (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        res.status(400).send({
+        res.status(400).json({
             errorMessage: "로그인 후 사용하세요.",
         });
         return;
