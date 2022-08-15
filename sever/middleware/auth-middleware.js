@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
         res.locals.nickname = user.nickname;
         next();
     } catch (error) {
-        console.log(error);
+        console.log("여기가 에러메시지", error);
         res.status(400).send({
             errorMessage: "로그인 후 사용하세요.",
         });
