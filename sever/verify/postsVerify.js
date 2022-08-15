@@ -1,7 +1,8 @@
 const { Post, User } = require("../../models");
+const bcrypt = require("bcrypt");
 
 class PostVerify {
-    veerifyAllPost = (secretKey, title, content) => {
+    veerifyBody = (secretKey, title, content) => {
         if (secretKey && title && content) {
             return true;
         } else {
@@ -41,6 +42,15 @@ class PostVerify {
         } else {
             return false;
         }
+    };
+
+    verifysecretKey = async (secretKey, postId) => {
+        const hashpassword = await Post.findOne({ where: { postId } });
+        const validPassword = await bcrypt.compare(
+            secretKey,
+            hashpassword.secretkey
+        );
+        return validPassword;
     };
 }
 

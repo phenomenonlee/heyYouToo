@@ -7,9 +7,9 @@ class PostsController {
     postsService = new PostsService();
     postVerify = new PostVerify();
 
-    testDelete = async () => {
+    testDelete = async (req, res) => {
         await Post.destroy({
-            where: { postId: 1 },
+            where: { postId: 9 },
         });
         res.send();
     };
@@ -25,7 +25,7 @@ class PostsController {
         // const { nickname, userId } = res.locals;
         const { nickname, userId } = { nickname: "hello", userId: 2 }; // 테스트 용
 
-        const exsisBody = await this.postVerify.veerifyAllPost(
+        const exsisBody = await this.postVerify.veerifyBody(
             secretKey,
             title,
             content
@@ -57,7 +57,6 @@ class PostsController {
         const exsisPost = await this.postVerify.exsisPost(postId);
 
         if (!exsisPost) {
-            console.log(exsisPost);
             return res.status(400).json({
                 errorMessage: "없는 게시글 입니다.",
             });
@@ -95,7 +94,6 @@ class PostsController {
         const exsisPost = await this.postVerify.exsisPost(postId);
 
         if (!exsisPost) {
-            console.log(exsisPost);
             return res.status(400).json({
                 errorMessage: "없는 게시글 입니다.",
             });
@@ -122,6 +120,79 @@ class PostsController {
 
         await this.postsService.deletePost(postId);
         res.status(200).json();
+    };
+
+    findOnePost = async (req, res) => {
+        const { postId } = req.params;
+        const { secretKey } = req.body;
+
+        const verifysecretKey = await this.postVerify.verifysecretKey(
+            secretKey,
+            postId
+        );
+        if (!verifysecretKey) {
+            return res
+                .status(400)
+                .json({ errorMessage: "비밀번호를 확인해주세요" });
+        }
+
+        const post = await this.postsService.findOnePost(postId);
+
+        res.status(200).json(post);
+    };
+
+    postLike = async (req, res) => {
+        const { postId } = req.params;
+        // const { userId } = res.locals;
+        const userId = 1;
+
+        const exsisPost = await this.postVerify.exsisPost(postId);
+
+        if (!exsisPost) {
+            return res.status(400).json({
+                errorMessage: "없는 게시글 입니다.",
+            });
+        }
+        const Postlike = await this.postsService.postLike(postId, userId);
+
+        if (!Postlike) {
+            return res.status(400).json({
+                errorMessage: "이미 좋아요 했습니다.",
+            });
+        }
+        res.status(200).json();
+    };
+
+    postUnlike = async (req, res) => {
+        const { postId } = req.params;
+        // const { userId } = res.locals;
+        const userId = 3;
+
+        const exsisPost = await this.postVerify.exsisPost(postId);
+
+        if (!exsisPost) {
+            return res.status(400).json({
+                errorMessage: "없는 게시글 입니다.",
+            });
+        }
+
+        const postUnlike = await this.postsService.postUnlike(postId, userId);
+
+        if (!postUnlike) {
+            return res.status(400).json({
+                errorMessage: "취소할 좋아요가 없습니다.",
+            });
+        }
+        res.status(200).json();
+    };
+
+    getMyPost = async (req, res) => {
+        // const { userId } = res.locals;
+        const userId = 2;
+
+        const MyPosts = await this.postsService.getMyPost(userId);
+
+        res.status(200).json({ MyPosts });
     };
 }
 

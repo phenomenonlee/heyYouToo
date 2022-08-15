@@ -1,4 +1,4 @@
-const { Post } = require("../../models");
+const { Post, Like } = require("../../models");
 
 class PostsRepositroy {
     findAllPost = async () => {
@@ -33,6 +33,41 @@ class PostsRepositroy {
         await Post.destroy({
             where: { postId },
         });
+    };
+
+    findOnePost = async (postId) => {
+        const post = await Post.findOne({ where: { postId } });
+        return post;
+    };
+
+    // 라이크 좋아요 부분
+    exsisLike = async (postId, userId) => {
+        const exsisLike = await Like.findOne({ where: { postId, userId } });
+
+        return exsisLike;
+    };
+
+    postLike = async (postId, userId) => {
+        await Like.create({ postId, userId });
+    };
+    // 라이크 취소 부분
+    postUnlike = async (postId, userId) => {
+        await Like.destroy({ where: { postId, userId } });
+    };
+
+    getMyPost = async (userId) => {
+        let myPostsLike = [];
+
+        // 내가 올린 게시글 찾기
+        const myPostData = await Post.findAll({ where: { userId } });
+
+        for (let i = 0; i < myPostData.length; i++) {
+            const myPostsLikeLength = await Like.findAll({
+                where: { postId: myPostData[i].postId },
+            });
+            myPostsLike.push(myPostsLikeLength.length);
+        }
+        return { myPostData, myPostsLike };
     };
 }
 
