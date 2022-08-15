@@ -48,14 +48,15 @@ class PostsRepositroy {
     };
 
     findOnePost = async (postId) => {
-        const post = await Post.findOne({ where: { postId } });
-        return post;
+        const postData = await Post.findOne({ where: { postId } });
+        const myPostLike = await Like.findAll({ where: { postId } });
+
+        return { postData, myPostLike };
     };
 
     // 라이크 좋아요 부분
     exsisLike = async (postId, userId) => {
         const exsisLike = await Like.findOne({ where: { postId, userId } });
-
         return exsisLike;
     };
 
@@ -73,6 +74,7 @@ class PostsRepositroy {
         // 내가 올린 게시글 찾기
         const myPostData = await Post.findAll({ where: { userId } });
 
+        // 내가 올린 게시글 좋아요 개수
         for (let i = 0; i < myPostData.length; i++) {
             const myPostsLikeLength = await Like.findAll({
                 where: { postId: myPostData[i].postId },

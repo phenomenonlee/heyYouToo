@@ -45,13 +45,15 @@ class PostsService {
     };
     findOnePost = async (postId) => {
         const post = await this.postsRepositroy.findOnePost(postId);
+        const { postData, myPostLike } = post;
+
         return {
-            postId: post.postId,
-            nickname: post.nickname,
-            title: post.title,
-            content: post.content,
-            like: null,
-            createdAt: post.createdAt,
+            postId: postData.postId,
+            nickname: postData.nickname,
+            title: postData.title,
+            content: postData.content,
+            like: myPostLike.length,
+            createdAt: postData.createdAt,
         };
     };
     postLike = async (postId, userId) => {
@@ -67,7 +69,6 @@ class PostsService {
 
     postUnlike = async (postId, userId) => {
         const exsisLike = await this.postsRepositroy.exsisLike(postId, userId);
-
         if (exsisLike) {
             await this.postsRepositroy.postUnlike(postId, userId);
             return true;

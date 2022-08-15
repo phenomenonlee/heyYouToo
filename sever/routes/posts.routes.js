@@ -9,24 +9,24 @@ const postsController = new PostsController();
 router.get("/", postsController.findAllPost);
 
 // 게시물 작성
-router.post("/", postsController.createPost);
+router.post("/", authMiddleware, postsController.createPost);
 
 // 게시물 수정
-router.patch("/:postId", postsController.updatePost);
+router.patch("/:postId", authMiddleware, postsController.updatePost);
 
 // 게시물 삭제
-router.delete("/:postId", postsController.deletePost);
+router.delete("/:postId", authMiddleware, postsController.deletePost);
 
 // 게시물 상세보기
-router.get("/:postId", postsController.findOnePost);
+router.get("/:postId", authMiddleware, postsController.findOnePost);
 
 // 게시글 좋아요
-router.post("/likes/:postId", postsController.postLike);
+router.post("/likes/:postId", authMiddleware, postsController.postLike);
 
 // 게시글 좋아요 취소
-router.delete("/unlikes/:postId", postsController.postUnlike);
+router.delete("/unlikes/:postId", authMiddleware, postsController.postUnlike);
 
 // 자기 게시글 조회
-router.get("/my/post", postsController.getMyPost);
+router.get("/my/post", authMiddleware, postsController.getMyPost);
 
 module.exports = router;

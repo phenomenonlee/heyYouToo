@@ -7,12 +7,12 @@ class PostsController {
     postsService = new PostsService();
     postVerify = new PostVerify();
 
-    testDelete = async (req, res) => {
+    /* testDelete = async (req, res) => {
         await Post.destroy({
-            where: { postId: 9 },
+            where: { postId: 5 },
         });
         res.send();
-    };
+    }; */
 
     findAllPost = async (req, res) => {
         const allPost = await this.postsService.findAllPost();
@@ -22,8 +22,7 @@ class PostsController {
 
     createPost = async (req, res) => {
         const { secretKey, title, content } = req.body;
-        // const { nickname, userId } = res.locals;
-        const { nickname, userId } = { nickname: "seok21", userId: 9 }; // 테스트 용
+        const { nickname, userId } = res.locals;
 
         const exsisBody = await this.postVerify.veerifyBody(
             secretKey,
@@ -51,8 +50,7 @@ class PostsController {
     updatePost = async (req, res) => {
         const { postId } = req.params;
         const { title, newContent } = req.body;
-        // const { userId } = res.locals;
-        const userId = 1; // 테스트 용
+        const { userId } = res.locals;
 
         const exsisPost = await this.postVerify.exsisPost(postId);
 
@@ -88,8 +86,7 @@ class PostsController {
     deletePost = async (req, res) => {
         const { postId } = req.params;
         const { password } = req.body;
-        // const { userId } = res.locals;
-        const userId = 9; // 테스트 용
+        const { userId } = res.locals;
 
         const exsisPost = await this.postVerify.exsisPost(postId);
 
@@ -143,8 +140,7 @@ class PostsController {
 
     postLike = async (req, res) => {
         const { postId } = req.params;
-        // const { userId } = res.locals;
-        const userId = 1;
+        const { userId } = res.locals;
 
         const exsisPost = await this.postVerify.exsisPost(postId);
 
@@ -165,8 +161,7 @@ class PostsController {
 
     postUnlike = async (req, res) => {
         const { postId } = req.params;
-        // const { userId } = res.locals;
-        const userId = 2;
+        const { userId } = res.locals;
 
         const exsisPost = await this.postVerify.exsisPost(postId);
 
@@ -177,7 +172,6 @@ class PostsController {
         }
 
         const postUnlike = await this.postsService.postUnlike(postId, userId);
-
         if (!postUnlike) {
             return res.status(400).json({
                 errorMessage: "취소할 좋아요가 없습니다.",
@@ -187,8 +181,7 @@ class PostsController {
     };
 
     getMyPost = async (req, res) => {
-        // const { userId } = res.locals;
-        const userId = 2;
+        const { userId } = res.locals;
 
         const MyPosts = await this.postsService.getMyPost(userId);
 
