@@ -1,4 +1,5 @@
 const{ Comment, User } = require("../../models");
+const bcrypt = require("bcrypt");
 
 class CommentsRepository {
 
@@ -49,12 +50,17 @@ class CommentsRepository {
         const comment = await Comment.findByPk(commentId);
         const userInfo = await User.findOne({ raw: true, where: {userId}})
 
-
         if(userId !== comment.userId){
             return {errorMessage: '댓글을 작성한 사용자가 아닙니다.'}
         };
  
-        if(password !== userInfo.password){
+        const hashpassword = await User.findOne({where: {userId}})
+        const validPassword = await bcrypt.compare(
+            password,
+            hashpassword.password
+        );
+
+        if(!validPassword){
             return {errorMessage: '비밀번호가 다릅니다.'}
         };
         

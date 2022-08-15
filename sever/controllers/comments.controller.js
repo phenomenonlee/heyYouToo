@@ -26,9 +26,9 @@ class CommentsController {
     createComment = async (req, res, next) => {
         const {postId} = req.params;
         const {comment} = req.body;
-        //const userId = 7;
-        const { userId } = res.locals; 
-        //console.log(userId) undefined
+        const userId = 10;
+/*         const { userId } = res.locals; 
+        console.log(res.locals) */
 
         if (!comment) {
             res
@@ -55,7 +55,7 @@ class CommentsController {
     updateComment = async (req, res, next) => {
         const {commentId} = req.params;
         const {newComment} = req.body;
-        const userId = 7;
+        const userId = 10;
 
         if (!newComment) {
             res
@@ -85,7 +85,7 @@ class CommentsController {
         const {commentId} = req.params;
         const {password} = req.body;
         //const { userId } = res.locals;
-        const userId = 7;
+        const userId = 10;
 
         if (!password) {
             res
