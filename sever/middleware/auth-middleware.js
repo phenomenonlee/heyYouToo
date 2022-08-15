@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     //쿠키
     if (!cookies.token) {
         res.status(400).send({
-            errorMessage: "로그인 후 사용하세요.",
+            errorMessage: "123로그인 후 사용하세요.",
         });
         return;
     }
@@ -17,9 +17,9 @@ module.exports = (req, res, next) => {
         res.locals.nickname = user.nickname;
         next();
     } catch (error) {
-        console.log("여기가 에러메시지", error);
+        console.log(error);
         res.status(400).send({
-            errorMessage: "로그인 후 사용하세요.",
+            errorMessage: "456로그인 후 사용하세요.",
         });
         return;
     }
