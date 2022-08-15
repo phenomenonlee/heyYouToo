@@ -1,0 +1,8 @@
+## package-lock.json
+package-lock.json
+
+## 노드 모듈
+node_modules/
+
+## 환경변수
+.env
