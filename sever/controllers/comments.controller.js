@@ -5,7 +5,12 @@ class CommentsController {
 
     //댓글 조회
     getComments = async (req, res, next) => {
+        const commetAuth = req.cookies;
         const { postId } = req.params;
+        if (commetAuth.commentCookie !== postId) {
+            return res.status(404).json({ errorMessage: "권한이 없습니다." });
+        }
+
         const comments = await this.commentsService.findAllcomment(postId);
 
         if (comments.length === 0) {
@@ -21,6 +26,12 @@ class CommentsController {
         const { postId } = req.params;
         const { comment } = req.body;
         const { userId } = res.locals;
+
+        const commetAuth = req.cookies;
+
+        if (commetAuth.commentCookie !== postId) {
+            return res.status(404).json({ errorMessage: "권한이 없습니다." });
+        }
 
         if (!comment) {
             res.status(404).json({

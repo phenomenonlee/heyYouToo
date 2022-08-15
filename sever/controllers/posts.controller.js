@@ -123,6 +123,8 @@ class PostsController {
         const { postId } = req.params;
         const { secretKey } = req.body;
 
+        res.cookie("commentCookie", postId);
+
         const verifysecretKey = await this.postVerify.verifysecretKey(
             secretKey,
             postId
