@@ -8,6 +8,9 @@ node_modules/
 .env
 
 ## html 파일들 
-index.html
-signin.html
-signup.html
+# index.html
+# signin.html
+# signup.html
+
+## static 파일 무시
+#static/index.css
