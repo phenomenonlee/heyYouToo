@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
     const { authorization } = req.headers;
     //쿠키
 
-    const [tokenType, tokenValue] = (authorization || "").split("=");
+    const [tokenType, tokenValue] = (authorization || "").split(" ");
     if (tokenType !== "Bearer") {
         res.status(400).json({
             errorMessage: "로그인 후 사용하세요.",
