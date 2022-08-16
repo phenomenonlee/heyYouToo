@@ -4,18 +4,20 @@ module.exports = (req, res, next) => {
     // const cookies = req.cookies;
     const { cookie } = req.headers;
 
+    const [tokenType, tokenValue] = (cookie || "").split("=");
+
     //쿠키
-    if (!cookie.token) {
-        res.status(400).json({
-            errorMessage: cookie,
+    if (tokenType !== "token") {
+        res.status(400).send({
+            errorMessage: "token이 아닙니다",
         });
         return;
     }
 
     try {
-        const user = jwt.verify(cookie.token, "hohoho");
-        res.locals.userId = user.userId;
-        res.locals.nickname = user.nickname;
+        const tokenvoll = jwt.verify(tokenValue, "hohoho");
+        res.locals.userId = tokenvoll.userId;
+        res.locals.nickname = tokenvoll.nickname;
         next();
     } catch (error) {
         console.log(error);
