@@ -2,22 +2,28 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
     // const cookies = req.cookies;
-    const cookie = req.headers.cookie;
-
-    const [tokenType, tokenValue] = (cookie || "").split("=");
-
+    const { authorization } = req.headers;
     //쿠키
-    if (tokenType !== "token") {
-        res.status(400).send({
-            errorMessage: cookie,
+
+    const [tokenType, tokenValue] = (authorization || "").split("=");
+    if (tokenType !== "Bearer") {
+        res.status(400).json({
+            errorMessage: "로그인 후 사용하세요.",
         });
         return;
     }
+    /* 
+    if (!cookies.token) {
+        res.status(400).json({
+            errorMessage: "로그인 후 사용하세요.",
+        });
+        return;
+    } */
 
     try {
-        const tokenvoll = jwt.verify(tokenValue, "hohoho");
-        res.locals.userId = tokenvoll.userId;
-        res.locals.nickname = tokenvoll.nickname;
+        const user = jwt.verify(tokenValue, "hohoho");
+        res.locals.userId = user.userId;
+        res.locals.nickname = user.nickname;
         next();
     } catch (error) {
         console.log(error);

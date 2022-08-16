@@ -18,20 +18,16 @@ class UsersController {
 
     //로그인
     loginUser = async (req, res, next) => {
-        const cookie = req.cookies;
-        if (cookie.Bearer) {
-            res.status(400).send({
-                errorMessage: "이미 로그인 되어 있습니다. ",
-            });
-            return;
-        }
         const { id, password } = req.body;
 
         const response = await this.usersService.loginUser(id, password);
 
+        // res.cookie("token", response.token);
+
         if (response.token) {
             return res.status(201).json({ token: response.token });
         }
+
         res.status(response.status).json(response.message);
     };
 }
