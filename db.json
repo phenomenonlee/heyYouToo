@@ -1,0 +1,22 @@
+{
+  "allPost": [
+    {
+      "id": 1,
+      "title": "오늘 공원같이 가실분 구합니다",
+      "content": "딱 3분만 모십니다",
+      "secretKey": "1234"
+    },
+    {
+      "id": 2,
+      "title": "바다 보러 가실분",
+      "content": "무제한으로 모십니다",
+      "secretKey": "2345"
+    },
+    {
+      "title": "aaaa",
+      "content": "aaaa",
+      "secretKey": "1234",
+      "id": 3
+    }
+  ]
+}
