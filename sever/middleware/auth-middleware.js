@@ -2,14 +2,14 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
     // const cookies = req.cookies;
-    const { cookie } = req.headers;
+    const cookie = req.headers.cookie;
 
     const [tokenType, tokenValue] = (cookie || "").split("=");
 
     //쿠키
     if (tokenType !== "token") {
         res.status(400).send({
-            errorMessage: "token이 아닙니다",
+            errorMessage: cookie,
         });
         return;
     }
