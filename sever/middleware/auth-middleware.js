@@ -5,8 +5,8 @@ module.exports = (req, res, next) => {
 
     //쿠키
     if (!cookies.token) {
-        res.status(400).send({
-            errorMessage: `${cookies} 123로그인 후 사용하세요.`,
+        res.status(400).json({
+            errorMessage: "로그인 후 사용하세요.",
         });
         return;
     }
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        res.status(400).send({
+        res.status(400).json({
             errorMessage: "로그인 후 사용하세요.",
         });
         return;
