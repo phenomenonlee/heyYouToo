@@ -7,7 +7,7 @@ class PostVerify {
             return true;
         } else {
             return false;
-        }
+        };
     };
 
     veerifyUpdate = (title, newContent) => {
