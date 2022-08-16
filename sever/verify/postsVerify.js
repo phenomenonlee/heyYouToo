@@ -7,7 +7,7 @@ class PostVerify {
             return true;
         } else {
             return false;
-        };
+        }
     };
 
     veerifyUpdate = (title, newContent) => {
@@ -45,6 +45,9 @@ class PostVerify {
 
     verifysecretKey = async (secretKey, postId) => {
         const hashpassword = await Post.findOne({ where: { postId } });
+        if (!secretKey) {
+            return false;
+        }
         const validPassword = await bcrypt.compare(
             secretKey,
             hashpassword.secretkey
