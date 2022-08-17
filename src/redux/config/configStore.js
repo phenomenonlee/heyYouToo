@@ -1,9 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
+import comments from "../modules/commentsSlice";
+import comment from "../modules/commentSlice";
+import posts from "../modules/detail";
+import detail from "../modules/detail";
 
-import users from "../modules/users";
 
 const store = configureStore({
-  reducer: { users: users },
+  reducer: {
+    comments,
+    comment,
+    posts,
+    detail,
+  },
 });
 
 export default store;

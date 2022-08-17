@@ -10,7 +10,7 @@ export const getListThunk = createAsyncThunk(
   async (payload, api) => {
     try {
       const data = await axios.get("http://localhost:3001/list");
-      return api.fulfillWithValue(data.data);
+      return api.fulfillWithValue(data);
     } catch (e) {
       return api.rejectWithValue(e);
     }
