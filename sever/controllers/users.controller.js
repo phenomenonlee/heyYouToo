@@ -30,6 +30,18 @@ class UsersController {
 
         res.status(response.status).json(response.message);
     };
+
+    checkUser = async (req, res) => {
+        const { id } = req.body;
+
+        const user = await this.usersService.checkUser(id);
+
+        if (user) {
+            res.status(200).json();
+        } else {
+            res.status(400).json({ errorMessage: "중복된 아이디입니다." });
+        }
+    };
 }
 
 module.exports = UsersController;

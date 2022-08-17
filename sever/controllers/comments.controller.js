@@ -6,25 +6,37 @@ class CommentsController {
 
     //댓글 조회
     getComments = async (req, res, next) => {
-        const { authorization } = req.headers;
         // const [tokenType, tokenValue, commentCookie] = (
         //     authorization || ""
         // ).split(" ");
-        const verifyComment = jwt.verify(authorization, "hohoho");
 
-        const { postId } = req.params;
-        if (verifyComment.postId !== postId) {
-            return res.status(404).json({ errorMessage: "권한이 없습니다." });
-        }
+        const { authorization } = req.headers;
+        try {
+            const verifyComment = jwt.verify(authorization, "hohoho");
 
-        const comments = await this.commentsService.findAllcomment(postId);
+            const { postId } = req.params;
+            if (verifyComment.postId !== postId) {
+                return res
+                    .status(404)
+                    .json({ errorMessage: "권한이 없습니다." });
+            }
 
-        if (comments.length === 0) {
-            res.status(404).json({ errorMessage: "댓글이 존재하지 않습니다." });
+            const comments = await this.commentsService.findAllcomment(postId);
+
+            if (comments.length === 0) {
+                res.status(404).json({
+                    errorMessage: "댓글이 존재하지 않습니다.",
+                });
+                return;
+            }
+
+            res.status(200).json({ data: comments });
+        } catch (error) {
+            res.status(400).json({
+                errorMessage: error.name,
+            });
             return;
         }
-
-        res.status(200).json({ data: comments });
     };
 
     //댓글 작성
@@ -37,11 +49,17 @@ class CommentsController {
         // const [tokenType, tokenValue, commentCookie] = (
         //     authorization || ""
         // ).split(" ");
-
-        const verifyComment = jwt.verify(authorization, "hohoho");
-
-        if (verifyComment.postId !== postId) {
-            return res.status(404).json({ errorMessage: "권한이 없습니다." });
+        try {
+            const verifyComment = jwt.verify(authorization, "hohoho");
+            if (verifyComment.postId !== postId) {
+                return res
+                    .status(404)
+                    .json({ errorMessage: "권한이 없습니다." });
+            }
+        } catch (error) {
+            res.status(400).json({
+                errorMessage: error.name,
+            });
         }
 
         if (!comment) {
