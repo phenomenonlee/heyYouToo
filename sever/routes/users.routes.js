@@ -18,6 +18,6 @@ router.post("/login", loginCheck, usersController.loginUser);
     res.sendFile(path.resolve(__dirname, "..", "..", "signin.html"));
 }); */
 
-router.get("/checkUser", usersController.checkUser);
+router.post("/checkUser", usersController.checkUser);
 
 module.exports = router;
