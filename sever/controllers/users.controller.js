@@ -37,9 +37,9 @@ class UsersController {
         const user = await this.usersService.checkUser(id);
 
         if (user) {
-            res.status(200).json();
-        } else {
             res.status(400).json({ errorMessage: "중복된 아이디입니다." });
+        } else {
+            res.status(200).json();
         }
     };
 }
