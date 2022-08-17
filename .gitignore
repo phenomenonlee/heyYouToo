@@ -8,6 +8,6 @@ node_modules/
 .env
 
 ## html
-index.html
+# index.html
 signin.html
 signup.html

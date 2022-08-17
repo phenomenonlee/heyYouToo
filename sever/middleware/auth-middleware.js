@@ -13,13 +13,13 @@ module.exports = (req, res, next) => {
         return;
     }
 
-    /* if (!cookies.token) {
+    /*  if (!cookies.token) {
         res.status(400).json({
             errorMessage: "로그인 후 사용하세요.",
         });
         return;
-    }
-    try {
+    } */
+    /* try {
         const user = jwt.verify(cookies.token, "hohoho");
         res.locals.userId = user.userId;
         res.locals.nickname = user.nickname;

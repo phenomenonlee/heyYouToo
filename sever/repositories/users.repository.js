@@ -45,6 +45,11 @@ class UsersRepository {
 
         return user;
     };
+
+    checkUser = async (id) => {
+        const checkUser = await User.findOne({ where: { id } });
+        return checkUser;
+    };
 }
 
 module.exports = UsersRepository;
