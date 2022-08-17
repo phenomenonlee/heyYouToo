@@ -18,7 +18,7 @@ router.patch("/:postId", authMiddleware, postsController.updatePost);
 router.delete("/:postId", authMiddleware, postsController.deletePost);
 
 // 게시물 상세보기
-router.get("/:postId", authMiddleware, postsController.findOnePost);
+router.post("/:postId", authMiddleware, postsController.findOnePost);
 
 // 게시글 좋아요
 router.post("/likes/:postId", authMiddleware, postsController.postLike);
