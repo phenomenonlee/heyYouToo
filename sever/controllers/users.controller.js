@@ -22,7 +22,7 @@ class UsersController {
 
         const response = await this.usersService.loginUser(id, password);
 
-        res.cookie("token", response.token);
+        // res.cookie("token", response.token);
 
         if (response.token) {
             return res.status(201).json({ token: response.token });
