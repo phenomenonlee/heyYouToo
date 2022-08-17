@@ -1,7 +1,8 @@
 const PostsService = require("../services/posts.service");
 const PostVerify = require("../verify/postsVerify");
+const jwt = require("jsonwebtoken");
 
-const { Post } = require("../../models"); //  테스트 용
+// const { Post } = require("../../models"); //  테스트 용
 
 class PostsController {
     postsService = new PostsService();
@@ -123,7 +124,14 @@ class PostsController {
         const { postId } = req.params;
         const { secretKey } = req.body;
 
-        res.cookie("commentCookie", postId);
+        const commentToken = jwt.sign(
+            {
+                postId,
+            },
+            "hohoho"
+        );
+
+        res.cookie("commentCookie", commentToken);
 
         const verifysecretKey = await this.postVerify.verifysecretKey(
             secretKey,

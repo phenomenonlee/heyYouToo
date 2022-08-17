@@ -7,6 +7,14 @@ const development = {
     database: "juZZulDB",
     host: env.DB_HOST,
     dialect: "mysql",
+    timezone: "+09:00",
+    dialectOptions: {
+        dateStrings: true,
+        typeCast: true,
+    },
+    define: {
+        timestamps: true,
+    },
 };
 
 const production = {
