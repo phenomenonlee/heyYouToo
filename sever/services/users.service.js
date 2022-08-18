@@ -79,7 +79,7 @@ class UsersService {
         const hashpassword = await User.findOne({
             where: { id: loginUserdata.id },
         });
-
+        //비밀번호 해시값 확인 후 토큰 발급
         const validPassword = await bcrypt.compare(
             password,
             hashpassword.password
@@ -104,3 +104,8 @@ class UsersService {
 }
 
 module.exports = UsersService;
+
+
+//컨트롤러에서 서비스로 호출되면 서비스에서는 각 기능에 필요한 데이터들을 레포지트리에서 가져오는 역할을 한다.
+//레포지트리에서 리턴된 데이터를 가공하여 기능,형식에 맞게 컨트롤러로 리턴시킨다.
+//실질적인 작업은 서비스에서 다 이루어 진다.
