@@ -30,7 +30,7 @@ class UsersController {
 
         res.status(response.status).json(response.message);
     };
-
+    //아이디 중복체크
     checkUser = async (req, res) => {
         const { id } = req.body;
 
@@ -45,3 +45,6 @@ class UsersController {
 }
 
 module.exports = UsersController;
+
+//라우터에서 컨트롤러로 콜스택이 동작하면 각 기능에 맞게 컨트롤러에서 서비스로
+//호출하고 컨트롤러에서는 리스폰역할을 담당하는 기능을 한다.
