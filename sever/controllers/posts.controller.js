@@ -140,6 +140,27 @@ class PostsController {
         // params로 postId를 받음
         const { postId } = req.params;
 
+        /* const { secretKey } = req.body; */
+
+        /*         const commentToken = jwt.sign(
+            {
+                postId,
+            },
+            "hohoho"
+        );
+
+        res.cookie("commentCookie", commentToken); */
+
+        /*         const verifysecretKey = await this.postVerify.verifysecretKey(
+            secretKey,
+            postId
+        );
+        if (!verifysecretKey) {
+            return res
+                .status(400)
+                .json({ errorMessage: "비밀번호를 확인해주세요" });
+        } */
+
         // postId를 서비스 계층에 인자로 보내줌
         const post = await this.postsService.findOnePost(postId);
 

@@ -18,6 +18,7 @@ class CommentsController {
 
         //게시글의 secetkey를 모르는 유저가 댓글을 조회하는 부분을 막기 위해 작성한 부분
         //게시글 상세페이지 조회를 하면 해당 postId로 comment token을 발급해주는데 그 토큰이 있는지 확인
+
         /*  if (verifyComment.postId !== postId) {
             return res.status(400).json({ errorMessage: "권한이 없습니다." });
         } */
@@ -44,6 +45,7 @@ class CommentsController {
         const { userId } = res.locals;
 
         // const { authorization } = req.headers;
+
         /* const verifyComment = jwt.verify(authorization, "hohoho");
         if (verifyComment.postId !== postId) {
             return res.status(400).json({ errorMessage: "권한이 없습니다." });

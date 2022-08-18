@@ -8,7 +8,9 @@ class PostsService {
     findAllPost = async () => {
         const allPost = await this.postsRepositroy.findAllPost();
 
+
         //repository에서 return 값을 구조분해할당으로 받음
+
         // allpostData는 모든 게시글의 데이터를 배열 형태로 가지고 옴
         // findAllpostLikk는 게시글마다 가지고 있는 좋아요 갯수를 배열 형태로 보내줌
         const { allPostData, findAllPostLike } = allPost;
