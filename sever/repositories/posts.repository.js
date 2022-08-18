@@ -1,6 +1,12 @@
 const { Post, Like, Comment } = require("../../models");
 
 class PostsRepositroy {
+    //  allPostData에서 모든 게시글 데이터를 가지고 옴
+    /* 
+    반복문은 현재 게시글의 개수만큼 돌리고 Like 데이터베이스 모델에서
+    where를 보면 
+      */
+
     findAllPost = async () => {
         let findAllPostLike = [];
 

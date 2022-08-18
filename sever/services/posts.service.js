@@ -4,10 +4,20 @@ const bcrypt = require("bcrypt");
 class PostsService {
     postsRepositroy = new PostsRepositroy();
 
+    // 서비스 계층에서 repository 계층에서 받아온 모든 게시글 데이터를 가공함
     findAllPost = async () => {
         const allPost = await this.postsRepositroy.findAllPost();
+
+        //repository에서 return 값을 객체분해할당으로 받음
+        // allpostData는 모든 게시글의 데이터를 배열 형태로 가지고 옴
+        // findAllpostLikk는 게시글마다 가지고 있는 좋아요 갯수를 배열 형태로 보내줌
         const { allPostData, findAllPostLike } = allPost;
 
+        /* 
+        가져온 모든 게시글을 map 함수로 돌려서 리턴 해주며, like 항목은 
+        findAllpostLike에서 가지고 와서 현재 게시글의 인덱스 값을 키 값으로 넣어줌 
+        그리고 sort를 사용해서 게시글을 최신순으로 정렬해준다.
+        */
         return allPostData
             .map((curV, index) => {
                 return {

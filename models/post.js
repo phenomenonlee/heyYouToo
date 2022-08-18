@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
             title: { type: DataTypes.STRING, require: true },
             content: { type: DataTypes.STRING, require: true },
             nickname: { type: DataTypes.STRING, require: true },
-            secretkey: { type: DataTypes.STRING, require: true },
         },
         {
             sequelize,

@@ -21,10 +21,6 @@ module.exports = {
                 type: Sequelize.STRING,
                 require: true,
             },
-            secretkey: {
-                type: Sequelize.STRING,
-                require: true,
-            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
