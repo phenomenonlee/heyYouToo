@@ -2,18 +2,9 @@ const PostsService = require("../services/posts.service");
 const PostVerify = require("../verify/postsVerify");
 const jwt = require("jsonwebtoken");
 
-// const { Post } = require("../../models"); //  테스트 용
-
 class PostsController {
     postsService = new PostsService();
     postVerify = new PostVerify();
-
-    /* testDelete = async (req, res) => {
-        await Post.destroy({
-            where: { postId: 5 },
-        });
-        res.send();
-    }; */
 
     // 데이터베이스의 저장되어 있는 모든 게시글을 가지고 옴
     findAllPost = async (req, res) => {
@@ -23,17 +14,25 @@ class PostsController {
     };
 
     createPost = async (req, res) => {
+        // 바디 값으로 title과 content를 받음
+        // authMiddleware를 거치면 nickname과 userId를 locals로 받을 수 있기 때문에 받음
         const { title, content } = req.body;
         const { nickname, userId } = res.locals;
 
+        /*
+        postVerify 클래스를 가지고 와서 verifyBody 함수에 title과 content를 보내줌 
+        그러면 리턴 값으로 true 또는 false를 보내줌 
+         */
         const exsisBody = await this.postVerify.veerifyBody(title, content);
 
+        // exsisBody에서 받은 값으로 조건문을 실행, false가 오면 입력 값을 확인하라고 메시지를 보내줌
         if (!exsisBody) {
             return res.status(400).json({
                 errorMessage: "입력값을 확인해주세요",
             });
         }
 
+        // 검증이 통과하면 service 계층으로 인자 값으로 title, content, nickname, userId를 보내줌
         await this.postsService.createPost(title, content, nickname, userId);
 
         res.status(201).json();

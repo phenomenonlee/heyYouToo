@@ -2,15 +2,17 @@ const { Post, Like, Comment } = require("../../models");
 
 class PostsRepositroy {
     //  allPostData에서 모든 게시글 데이터를 가지고 옴
-    /* 
-    반복문은 현재 게시글의 개수만큼 돌리고 Like 데이터베이스 모델에서
-    where를 보면 
-      */
 
     findAllPost = async () => {
         let findAllPostLike = [];
 
         const allPostData = await Post.findAll();
+
+        /* 반복문은 현재 게시글의 개수만큼 돌리고 Like 데이터베이스 모델에서
+    where에서 postId에 반복문을 돌리면서 현재 postId를 넣어서 찾고
+    그 찾은 값에 길이가 좋아요 갯수이기 때문에 findAllpostLike에 
+    값을 push해준다. 그리고 return으로 allPostData와 findAllpostLike를
+    보내준다.*/
 
         for (let i = 0; i < allPostData.length; i++) {
             let allPostLike = await Like.findAll({
@@ -23,6 +25,7 @@ class PostsRepositroy {
     };
 
     createPost = async (title, content, nickname, userId) => {
+        // 받은 인자값을 데이터베이스에 추가
         await Post.create({
             title,
             content,
