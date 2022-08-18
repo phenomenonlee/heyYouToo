@@ -34,6 +34,7 @@ class PostsService {
     };
 
     createPost = async (title, content, nickname, userId) => {
+        // 받은 인자 값을 데이터베이스 계층으로 보내줌
         await this.postsRepositroy.createPost(title, content, nickname, userId);
     };
 

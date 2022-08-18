@@ -23,7 +23,7 @@ router.delete("/:postId", authMiddleware, postsController.deletePost);
 
 // 게시물 상세보기
 // 상세보기 할 postId를 params로 받음
-router.post("/:postId", authMiddleware, postsController.findOnePost);
+router.get("/:postId", authMiddleware, postsController.findOnePost);
 
 // 게시글 좋아요
 // 좋아요 할 postId를 params로 받음
