@@ -35,9 +35,9 @@ class CommentsController {
 
         // const { authorization } = req.headers;
 
-        /*     const verifyComment = jwt.verify(authorization, "hohoho");
+        /* const verifyComment = jwt.verify(authorization, "hohoho");
         if (verifyComment.postId !== postId) {
-            return res.status(404).json({ errorMessage: "권한이 없습니다." });
+            return res.status(400).json({ errorMessage: "권한이 없습니다." });
         }
         res.status(400).json({
             errorMessage: error.name,
