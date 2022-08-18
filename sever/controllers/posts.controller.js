@@ -133,7 +133,7 @@ class PostsController {
 
         res.cookie("commentCookie", commentToken); */
 
-        const verifysecretKey = await this.postVerify.verifysecretKey(
+        /*         const verifysecretKey = await this.postVerify.verifysecretKey(
             secretKey,
             postId
         );
@@ -141,7 +141,7 @@ class PostsController {
             return res
                 .status(400)
                 .json({ errorMessage: "비밀번호를 확인해주세요" });
-        }
+        } */
 
         const post = await this.postsService.findOnePost(postId);
 
