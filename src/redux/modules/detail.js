@@ -1,16 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getCookie } from "../../util/cookie";
 
-const getDetailPage = "http://wetube-phenomenonlee.shop/api/posts/"
+// const getDetailPage = "http://wetube-phenomenonlee.shop/api/"
 
 export const __getPostThunk = createAsyncThunk(
     "GET_POST",
-    async (arg, thunkAPI) => {
+    async (id, payload, thunkAPI) => {
+      console.log(payload)
         try {
-        console.log(arg,typeof(arg))
-        // const data = await axios.get(getDetailPage, arg);
-        const data = await axios.get(getDetailPage+`${arg}`);
-        return thunkAPI.fulfillWithValue(data.data.allPost);
+          const data = await axios.post(`http://wetube-phenomenonlee.shop/api/posts/${id}`, payload,  {
+              headers: {
+                Authorization: `Bearer ${getCookie("token")}`,
+              },
+            });
+            // console.log("detail", data.data);
+            return thunkAPI.fulfillWithValue(data.data);
     } catch (e) {
         return thunkAPI.rejectWithValue(e.code);
     }
@@ -19,12 +24,10 @@ export const __getPostThunk = createAsyncThunk(
 
 export const __updatePostThunk = createAsyncThunk(
     "UPDATE_POST",
-    async (payload, thunkAPI) => {
+    async (payload, id, thunkAPI) => {
         try {
-        // axios.post("http://wetube-phenomenonlee.shop/api/posts/:postId", payload);
-        axios.patch(`http://localhost:3001/post/${payload.postId}`, payload)
+        axios.patch(`http://wetube-phenomenonlee.shop/api/posts/${id}`, payload);
         return thunkAPI.fulfillWithValue(payload);
-        
     } catch (error) {
         return thunkAPI.rejectWithValue(error.code);
         }
@@ -33,11 +36,10 @@ export const __updatePostThunk = createAsyncThunk(
 
 export const __deletePostThunk = createAsyncThunk(
     "DELETE_POST",
-    async (payload, thunkAPI) => {
+    async (payload, id, thunkAPI) => {
         try {
-        //   axios.delete("http://wetube-phenomenonlee.shop/api/posts/:postId", arg);
-          axios.delete("http://localhost:3001/allpost", payload);
-          console.log(payload)
+          axios.delete(`http://wetube-phenomenonlee.shop/api/posts/${id}`, payload);
+         
         return thunkAPI.fulfillWithValue(payload);
       } catch (e) {
         return thunkAPI.rejectWithValue(e.code);
@@ -46,15 +48,16 @@ export const __deletePostThunk = createAsyncThunk(
   );
 
 const initialState = {
-    allPost: {
-            id: 1,
-            postId: 1,
-            title: "운동하실분",
-            nickName: "멍멍이",
-            like: 10000,
-            content: "다이어트, 벌크업, 유산소 다양한 팁들 알려드립니다. ",
-            createdAt: "2020-01-01"
-            },
+  allPost: [
+    {
+      postId: 1,
+      title: "운동하실분",
+      content: "다이어트, 벌크업, 유산소 다양한 팁들 알려드립니다. ",
+      nickname: "멍멍이",
+      like: 10000,
+      createdAt: "2020-01-01"
+  }
+  ],
     error: null,
     isLoading: false,
 }
@@ -64,14 +67,9 @@ export const detail = createSlice({
     initialState,
     reducers: {
         clearPost: (state) => {
-            state.post = {
-                id: 0,
-                postId: 0,
+            state.posts = {
                 title: "",
-                nickName: "",
-                like: 0,
-                content: "",
-                createdAt: "",
+                newContent: "",    
             };
         },
     },

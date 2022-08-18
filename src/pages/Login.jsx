@@ -7,9 +7,6 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setCookie } from "../util/cookie";
 
-// import { useCookies } from "react-cookie";
-// import { setCookie, getCookie } from "../util/cookie";
-
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,11 +40,6 @@ const Login = () => {
     setLogin({ ...login, password: e.target.value });
   };
 
-  // axios.defaults.withCredentials = true;
-
-  // const initialOpt = {
-  //   sameSite: "none",
-  // };
   const onSubmitHandler = async () => {
     await axios
       .post("http://wetube-phenomenonlee.shop/api/users/login", login)
@@ -57,9 +49,6 @@ const Login = () => {
           secure: true,
           sameSite: "none",
         });
-        // console.log(result);
-        // const { token } = result.data;
-        // document.cookie = `_y7o12=${token}`;
         navigate("/main");
       })
       .catch((err) => {
@@ -81,6 +70,7 @@ const Login = () => {
             {userIdError && <SignupInput>이메일 형식으로 써주세요</SignupInput>}
             <SPwInput
               placeholder="password"
+              type="password"
               minLength={8}
               value={userPw}
               onChange={onChangeUserPw}
@@ -114,13 +104,14 @@ const SMain = styled.div`
   width: 100%;
   height: calc(100% - 120px);
   padding: 10px;
-  border: 2px solid black;
+  border: 1px solid gray;
   flex-direction: column;
   align-items: center;
   display: flex;
   margin-top: 120px;
   border-top: none;
   justify-content: center;
+  background-color: #fff;
 `;
 
 const SLoginBox = styled.div`
@@ -139,6 +130,7 @@ const SIdInput = styled.input`
   height: 40px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   border-radius: 5px;
+  background-color: #fff;
 `;
 const SPwInput = styled.input`
   margin-top: 30px;
@@ -146,6 +138,7 @@ const SPwInput = styled.input`
   height: 40px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   border-radius: 5px;
+  background-color: #fff;
 `;
 
 const SLoginBtnSet = styled.div`

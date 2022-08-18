@@ -8,42 +8,53 @@ import {
 } from "../redux/modules/commentsSlice";
 import { __getComment } from "../redux/modules/commentSlice";
 import Layout from "./Layout";
+// import { nanoid } from "@reduxjs/toolkit";
 
 
 const Comment = ({ comment }) => {
-  const { postId } = useParams();
+  const commentList = useSelector((state) => state.comment.data);
+  // console.log("sdfsdfsdfComment", commentList);
+  
   const dispatch = useDispatch();
-  const [edit, setEdit] = useState(false);
+  // const commentId = nanoid();
+  const { id } = useParams();
+  // const [commentId, setCommentId] = useState();
+
   const [updatedComment, setUpdatedComment] = useState("");
   const [isShow, setIsShow] = useState(false);
-
-  const { commentList } = useSelector((state) => state);
-  console.log(commentList);
-
+  const [edit, setEdit] = useState(false);
   const onDelButHandler = () => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      dispatch(__deleteComment(comment.id));
+      dispatch(__deleteComment(id, comment.id));
     } else {
       return;
     }
+    // console.log(comment.id)
   };
 
   const onUpdatedBtnHandler = () => {
-    dispatch(
-      __updateComment({
-        id: comment.id,
-        content: updatedComment,
-        nickName: "",
-        postId,
-      })
+    dispatch(__updateComment(
+      comment.id,
+      updatedComment,
+      )
     );
     setEdit(false);
   };
 
+  // const onUpdatedBtnHandler = () => {
+  //   dispatch(__updateComment(
+  //     id,
+  //     comment.id,
+  //     updatedComment,
+  //     )
+  //   );
+  //   setEdit(false);
+  // };
+
   const onChangeEditBtnHandler = (e) => {
     setEdit(true);
-    dispatch(__getComment(comment.id));
+    dispatch(__getComment(id));
     setUpdatedComment(e.target.value);
   };
 
@@ -52,19 +63,19 @@ const Comment = ({ comment }) => {
   };
 
   const onEditBtnHandler = () => {
+    dispatch(__getComment(comment.id))
     setEdit(true);
   };
 
   useEffect(() => {
     setUpdatedComment(commentList);
     setIsShow(true);
-  }, [commentList, isShow]);
+  }, []);
 
   useEffect(() => {
-    dispatch(__getComment());
+    dispatch(__getComment(id));
     setIsShow(false);
-  }, [edit, isShow]);
-
+  }, []);
   return (
     <Layout>
     <div>
@@ -86,13 +97,24 @@ const Comment = ({ comment }) => {
       ) : (
         <>
               <CommentBox>
-            <p>{comment.nickName}</p>
-            <p>{comment.comment}</p>
-            <div>
+                <div>
+                  {commentList?.map((comment) => {
+                    return (
+                      <div key={comment.id}>
+                        {comment.nickname}
+                        {comment.comment}
+                        <div>
               <button onClick={onEditBtnHandler}>수정</button>
               <button onClick={onDelButHandler}>삭제</button>
             </div>
-          </CommentBox>
+                    </div>
+                    )})}
+              {/* <p>{commentList.nickname}</p>
+              <p>{commentList.comment}</p> */}
+              {/* <p>{commentList.createdAt}</p> */}
+            </div>
+           
+            </CommentBox>
         </>
       )}
       </div>
@@ -101,14 +123,10 @@ const Comment = ({ comment }) => {
 };
 
 const CommentBox = styled.div`
-  max-width: 700px;
-  width: 100vw;
-  height: 40px;
-  margin: 10px auto;
-  border: 1px solid lightgray;
-  border-radius: 10px;
   display: flex;
-  padding: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  
   
   button {
   background-color: white;
@@ -116,27 +134,29 @@ const CommentBox = styled.div`
   border-radius: 5px;
   padding: 5px;
   margin: 5px;
-  width: 150px;
-  height: 70px;
-  
+  width: 90px;
+  height: 30px;
   }
 `;
-
+const ContentStyle = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 const CommentInput = styled.input`
-  margin: 0px 20px 0px 200px;
+  /* margin: 0px 20px 0px 200px;
   height: 30px;
   width: 300px;
   border: 1px solid lightgray;
-  border-radius: 5px;
+  border-radius: 5px; */
 `;
 const Nickname = styled.p`
-  font-size: 15px;
+  /* font-size: 15px;
   position: relative;
-  top: -20px;
+  top: -20px; */
 `;
 const Content = styled.p`
-  position: relative;
-  left: -20px;
+  /* position: relative;
+  left: -20px; */
 `;
 
 export default Comment;

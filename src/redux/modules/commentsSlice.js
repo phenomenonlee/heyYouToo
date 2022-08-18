@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getCookie } from "../../util/cookie";
 
 export const __getCommentsThunk = createAsyncThunk(
   "GET_COMMENTS",
-  async (payload, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      // const { data } = await axios.get(`http://wetube-phenomenonlee.shop//comments/${payload}`);
-      const { data } = await axios.get(`http://localhost:3001/comments/${payload}`);
+      const { data } = await axios.get(`http://wetube-phenomenonlee.shop/api/comments/${id}`, {
+        headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },});
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -16,11 +19,13 @@ export const __getCommentsThunk = createAsyncThunk(
 
 export const __getCommentsByPostId = createAsyncThunk(
   "GET_COMMENT_BY_POST_ID",
-  async (payload, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      // const { data } = await axios.get(`http://wetube-phenomenonlee.shop/comments/${payload}`);
-      const { data } = await axios.get(`http://localhost:3001/comments/${payload}`);
-      // console.log(payload);
+      const { data } = await axios.get(`http://wetube-phenomenonlee.shop/api/comments/${id}`, {
+        headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },});
+      
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -30,11 +35,15 @@ export const __getCommentsByPostId = createAsyncThunk(
 
 export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
-  async (payload, thunkAPI) => {
+  async (payload, commentId, thunkAPI) => {
     try {
-      // await axios.delete(`http://wetube-phenomenonlee.shop/comments/${payload}`);
-      await axios.delete(`http://localhost:3001/comments/${payload}`);
-      console.log(payload);
+      console.log(commentId)
+      // console.log(paylaod)
+      await axios.delete(`http://wetube-phenomenonlee.shop/api/comments/${payload.id}`, payload, {
+        headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },});
+      // console.log(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -42,12 +51,19 @@ export const __deleteComment = createAsyncThunk(
   }
 );
 
+// /api/comments/:commentId
+
 export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
-  async (payload, thunkAPI) => {
+  async (payload, id, thunkAPI) => {
     try {
-      // axios.patch(`http://wetube-phenomenonlee.shop/comments/${payload.id}`, payload);
-      axios.patch(`http://localhost:3001/comments/${payload.id}`, payload);
+      console.log("aaaaa", payload);
+      console.log("dddd", id)
+      axios.patch(`http://wetube-phenomenonlee.shop/api/comments/${id}`, payload ,{
+        headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+        }
+      });
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -59,9 +75,12 @@ export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post("http://localhost:3001/comments", payload);
-      console.log(data)
-      // const { data } = await axios.post("http://wetube-phenomenonlee.shop/comments", payload);
+      const { data } = await axios.post(`http://wetube-phenomenonlee.shop/api/comments/${payload.id}`, payload, {
+        headers: {
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+        });
+      
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -75,7 +94,7 @@ const initialState = {
       isLoading: false,
       error: null,
     },
-    commentsByTodoId: {
+    commentsByPostId: {
       data: [],
       isLoading: false,
       error: null,
@@ -134,15 +153,27 @@ export const commentsSlice = createSlice({
       state.isLoading = true;
     },
     [__updateComment.fulfilled]: (state, action) => {
-      const target = state.commentsByPostId.data.findIndex(
-        (comment) => comment.id === action.payload.id
-      );
-      state.isLoading = false;
-      state.commentsByPostId.data.splice(target, 1, action.payload);
-    },
-    [__updateComment.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
+      state.data.map((comment) => {
+        if (comment.id === action.payload.id) {
+          return {
+            ...comment,
+            comment: action.payload.newComment,
+          };
+        } else {
+          return { ...comment };
+        }
+      })
+   
+    //   const target = state.commentsByPostId.data.findIndex(
+    //     (comment) => comment.id === action.payload.id
+    //     );
+    //     console.log(action.payload)
+    //   state.isLoading = false;
+    //   state.commentsByPostId.data.splice(target, 1, action.payload);
+    // },
+    // [__updateComment.rejected]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
     },
     // 댓글 추가
     [__addComment.pending]: (state) => {

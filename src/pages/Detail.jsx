@@ -1,3 +1,5 @@
+// useState 이메일,닉네임 
+// 이메일 확인 함수 및 axios.post 
 import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,8 +14,10 @@ import Comments from "../components/Comments"
 
 const Detail = () => {
   const dispatch = useDispatch();
-  const post_data = useSelector((state) => state.posts.allPost)
-  // console.log(post_data);
+  const post_data = useSelector((state) => state);
+
+  console.log("post_data", post_data);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -22,8 +26,8 @@ const Detail = () => {
   const [updatedPost, setUpdatedPost] = React.useState("");
   
   useEffect(() => {
-    setUpdatedPost(post_data.title);
-    setUpdatedPost(post_data.nicName);
+  setUpdatedTitle(post_data.title);
+  setUpdatedPost(post_data.content);
 
   }, [post_data])
 
@@ -31,7 +35,7 @@ const Detail = () => {
   useEffect(() => {
     dispatch(__getPostThunk(id));
     return () => dispatch(clearPost());
-  }, [dispatch, id]);
+  }, []);
 // 인풋박스에 제목과 내용----------------
   useEffect(() => {
     setUpdatedTitle(post_data.title);
@@ -96,18 +100,21 @@ const Detail = () => {
             ) : (
                 <>
             <div>
-              <NickNDayStyled>
-                <h1>{post_data?.nickName}님의 글</h1>
-                <div>
-                <h1>❤️ {post_data?.like}</h1>
+                    <NickNDayStyled>
+                      {/* {post_data?.map((post) => {
+                        <div key={post.id} post={post}> sdfsdf</div>
+                      })}; */}
+                <h1>{post_data.nickname}님의 글</h1>
+                  <div>
+                  <h1>❤️ {post_data?.like}</h1>
                 </div>
               </NickNDayStyled>
-              <TitleStyle>{post_data?.title}</TitleStyle>
+              <TitleStyle>{post_data.title}</TitleStyle>
                <div>
                </div>
               </div>
-            <h4>{post_data?.content}</h4>
-            <p>{post_data?.createdAt}</p>
+            <h4>{post_data.content}</h4>
+            <p>{post_data.createdAt}</p>
               </>
             )}
             
@@ -145,7 +152,6 @@ const ContentStyled = styled.div`
   border: 1px solid lightgray;
   width: 100%;
   height: 30em;
-
   p {
     bottom: 10px;
   }
@@ -154,11 +160,11 @@ const NickNDayStyled = styled.div`
   display: flex;
   justify-content: space-between;
 
-  padding: 20px;
-div{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+    padding: 20px;
+  div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 `;
 const TitleStyle = styled.h1`
@@ -175,10 +181,10 @@ const ButtonStyle = styled.button`
     border-radius: 3px;
 `
 const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  gap: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 10px;
 `
 
 const EditInputGroupStyle = styled.div`
@@ -189,11 +195,11 @@ const EditInputGroupStyle = styled.div`
     
     width: 200px;
 
-    input { 
+  input { 
       width: 200px;
       height: 30px;
     }
-    textarea {
+  textarea {
       width: 200px;
       height : 300px;
     }

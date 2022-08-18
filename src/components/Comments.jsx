@@ -7,17 +7,20 @@ import Comment from "./Comment";
 import styled from "styled-components";
 import Layout from "./Layout";
 const Comments = () => {
-  const { PostId } = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const data = useSelector((state) => state.comments.commentsByPostId);
-    console.log(data)
-    
+  // const data = useSelector((state) => state.comments.commentsByPostId);
+  const data = useSelector((state) => state.comment.comment);
+        // console.log("comments", data)
+  
+
+
   useEffect(() => {
     if (show) {
-      dispatch(__getCommentsByPostId(PostId));
+      dispatch(__getCommentsByPostId(id));
     }
-  }, [dispatch, PostId, show]);
+  }, []);
 
   return (
     <>
@@ -27,8 +30,8 @@ const Comments = () => {
             <button
               onClick={() => {
                 setShow(!show);
-              }}
-            >
+                                }}
+                >
               {show ? "취소" : "댓글 작성"}
              </button>
           </ToggleButtonStyle>
@@ -45,7 +48,7 @@ const Comments = () => {
 };
 
 const WrapBox = styled.div`
-  width: 500px;
+  
   height: ${({ show }) => (show ? "400px" : "50px")};
   margin: 10px auto;
 `;
@@ -55,6 +58,6 @@ const ToggleButtonStyle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export default Comments;

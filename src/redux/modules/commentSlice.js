@@ -1,13 +1,22 @@
+// http://wetube-phenomenonlee.shop/api/
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// http://wetube-phenomenonlee.shop/api/posts/:postId
+import { getCookie } from "../../util/cookie";
+
 export const __getComment = createAsyncThunk(
   "GET_COMMENT",
-  async (payload, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      // const  data  = await axios.get(`http://wetube-phenomenonlee.shop/comments/${payload}`);
-      const  {data } = await axios.get(`http://localhost:3001/comments/${payload}`);
-      return thunkAPI.fulfillWithValue(data);
+      // console.log(id);
+      // console.log(payload);
+      const data = await axios.get(`http://wetube-phenomenonlee.shop/api/comments/${id}`, {
+        headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+      });
+      // console.log("ddd", data)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
@@ -15,13 +24,15 @@ export const __getComment = createAsyncThunk(
 );
 
 const initialState = {
-  list: {
-    comment: "안녕하세요",
-    content: "s",
-    nickName: "sd",
-    id: 0,
+  comment: [
+    {
+    commentId: 0,
     postId: 0,
-  },
+    comment: "안녕하세요",
+    nickname: "멍멍이",
+    createdAt: "2020-01-01",
+  }
+  ],
   isLoading: false,
   error: null,
   isGlobalEditmode: false,
@@ -37,8 +48,10 @@ export const commentSlice = createSlice({
     },
     [__getComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.data = action.payload;
+      state.data = action.payload.data;
+      // console.log(action.payload)
     },
+    
     [__getComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;

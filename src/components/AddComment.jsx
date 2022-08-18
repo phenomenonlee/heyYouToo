@@ -6,18 +6,17 @@ import styled from "styled-components";
 
 const AddCommentForm = () => {
   const dispatch = useDispatch();
-  const { postId } = useParams();
+  const { id } = useParams();
   const [comment, setComment] = useState({
-  
     comment: "",
   });
-
+  
   const onAddCommentButtonHandler = (event) => {
     event.preventDefault();
     if (comment.comment.trim() === "") {
       return alert("댓글을 입력해주세요.");
     }
-    dispatch(__addComment({ postId, ...comment }));
+    dispatch(__addComment({ id, ...comment }));
     setComment({
       comment: "",
     });
@@ -56,11 +55,11 @@ const CommentFormStyle = styled.form`
   margin: 0px auto;
 `;
 const CommentInputStyle = styled.input`
-  margin: 0px 20px 0px 50px;
+  /* margin: 0px 20px 0px 50px;
   height: 30px;
   width: 400px;
   border: 2px solid lightgray;
-  border-radius: 5px;
+  border-radius: 5px; */
 `;
 
 
