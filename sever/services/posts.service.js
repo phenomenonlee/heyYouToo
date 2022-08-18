@@ -23,17 +23,8 @@ class PostsService {
             });
     };
 
-    createPost = async (secretKey, title, content, nickname, userId) => {
-        const salt = await bcrypt.genSalt(10);
-        const hashpassword = await bcrypt.hash(secretKey, salt);
-
-        await this.postsRepositroy.createPost(
-            hashpassword,
-            title,
-            content,
-            nickname,
-            userId
-        );
+    createPost = async (title, content, nickname, userId) => {
+        await this.postsRepositroy.createPost(title, content, nickname, userId);
     };
 
     updatePost = async (title, newContent, postId) => {

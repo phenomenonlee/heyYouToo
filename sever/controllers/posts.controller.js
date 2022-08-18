@@ -22,14 +22,10 @@ class PostsController {
     };
 
     createPost = async (req, res) => {
-        const { secretKey, title, content } = req.body;
+        const { title, content } = req.body;
         const { nickname, userId } = res.locals;
 
-        const exsisBody = await this.postVerify.veerifyBody(
-            secretKey,
-            title,
-            content
-        );
+        const exsisBody = await this.postVerify.veerifyBody(title, content);
 
         if (!exsisBody) {
             return res.status(400).json({
@@ -37,13 +33,7 @@ class PostsController {
             });
         }
 
-        await this.postsService.createPost(
-            secretKey,
-            title,
-            content,
-            nickname,
-            userId
-        );
+        await this.postsService.createPost(title, content, nickname, userId);
 
         res.status(201).json();
     };
