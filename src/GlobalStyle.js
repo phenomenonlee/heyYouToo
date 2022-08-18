@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     font-family: 'Noto Sans KR', sans-serif;
     list-style: none;
-    background-color: transparent;
+    background-color: #e1e1e1;
   }
 
   button {

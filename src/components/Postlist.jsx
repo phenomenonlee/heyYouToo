@@ -3,41 +3,45 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { __getPost } from "../redux/modules/postSlice";
 import { useNavigate } from "react-router-dom";
-const Postlist = () => {
+import { forwardRef } from "react";
+
+const Postlist = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.post.allPost);
   const navigate = useNavigate();
-  // console.log(postList);
+
   useEffect(() => {
     dispatch(__getPost());
   }, []);
 
-  // const KorDate = new Date(postList.createdAt).toLocaleDateString("ko-kr", {
-  //   month: "long",
-  //   day: "numeric",
-  // })
   return (
     <>
       {postList?.map((list) => (
-        <div
+        <SList
           key={list.postId}
           onClick={() => {
             navigate(`/detail/${list.postId}`);
           }}
+          ref={ref}
         >
           <SPost>
-            <div>{list.nickname}</div>
-            <div>{list.title}</div>
-            <div>{list.like}</div>
-            <div>{list.KorDate}</div>
-            {/* <div>{list.content}</div>
-            <div>{list.secretKey}</div> */}
+            <SNickname>{list.nickname}</SNickname>
+            <STitle>{list.title}</STitle>
+            <ImgCover>
+              <SLove></SLove>
+              <SLoveNumber>{list.like}</SLoveNumber>
+            </ImgCover>
+            <SDate>{list.createdAt.slice(0, 19)}</SDate>
           </SPost>
-        </div>
+        </SList>
       ))}
     </>
   );
-};
+});
+
+const SList = styled.div`
+  background-color: #fff;
+`;
 const SPost = styled.div`
   display: flex;
   margin-top: 25px;
@@ -47,6 +51,44 @@ const SPost = styled.div`
   border-radius: 5px;
   padding: 30px;
   margin-left: 35px;
+  cursor: pointer;
+  background-color: #fff;
+`;
+
+const SNickname = styled.div`
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+`;
+
+const STitle = styled.div`
+  background-color: #fff;
+  font-size: 15px;
+`;
+
+const ImgCover = styled.div`
+  flex-direction: row;
+  display: flex;
+  background-color: #fff;
+`;
+
+const SLove = styled.img`
+  background-image: url("/assets/images/love.png");
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+`;
+
+const SLoveNumber = styled.div`
+  margin-left: 10px;
+  background-color: #fff;
+`;
+
+const SDate = styled.div`
+  background-color: #fff;
+  color: violet;
+  font-style: italic;
 `;
 
 export default Postlist;

@@ -18,6 +18,8 @@ const Signup = () => {
     nickName: "",
   });
 
+  console.log(data);
+
   const navigate = useNavigate();
 
   const [userIdError, setUserIdError] = useState(false);
@@ -33,6 +35,18 @@ const Signup = () => {
     else setUserIdError(true);
     setUserId(e.target.value);
     setData({ ...data, id: e.target.value });
+  };
+
+  const duplicate = async (e) => {
+    try {
+      const response = await axios.post(
+        "http://wetube-phenomenonlee.shop/api/users/checkUser",
+        { id: data.id }
+      );
+      console.log(response);
+    } catch (err) {
+      alert("중복된아이디입니다");
+    }
   };
 
   const onChangenickname = (e) => {
@@ -65,8 +79,6 @@ const Signup = () => {
     setData({ ...data, confirmPw: e.target.value });
   };
 
-  console.log(data);
-
   const onSubmitHandler = async () => {
     if (!userId) setUserIdError(true);
     if (!nickname) setnicknameError(true);
@@ -85,7 +97,6 @@ const Signup = () => {
       return alert("무엇이라도 적으시오");
     }
 
-    // console.log(data);
     try {
       const response = await axios.post(
         "http://wetube-phenomenonlee.shop/api/users/join",
@@ -93,6 +104,7 @@ const Signup = () => {
       );
       console.log(response);
       alert("회원가입하셨습니다");
+      navigate("/");
     } catch (err) {
       console.log(err);
       alert("회원가입실패했습니다");
@@ -119,7 +131,7 @@ const Signup = () => {
                   onChange={onChangeUserId}
                   placeholder="ex22@gef.com"
                 />
-                <RepeatButton>중복확인</RepeatButton>
+                <RepeatButton onClick={duplicate}>중복확인</RepeatButton>
               </EmailCheckStyle>
               {userIdError && (
                 <SignupInput>이메일 형식으로 다시 써주세요</SignupInput>
@@ -191,6 +203,7 @@ const ContentStyle = styled.div`
     height: 35px;
     width: 15em;
   }
+  background: linear-gradient(#9db8bf, #9ccddb5e);
 `;
 
 const SingUpBoxStyle = styled.div`
@@ -198,12 +211,13 @@ const SingUpBoxStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  background: linear-gradient(#9db8bf, #9ccddb5e);
   margin-top: 50px;
 `;
 
 const EmailCheckStyle = styled.div`
   display: flex;
+  background: linear-gradient(#9db8bf, #9ccddb5e);
 `;
 
 const ButtonGroup = styled.div`
@@ -215,6 +229,7 @@ const ButtonGroup = styled.div`
     height: 20px;
   }
   gap: 10px;
+  background: linear-gradient(#9db8bf, #9ccddb5e);
 `;
 const RepeatButton = styled.button`
   color: #fff;

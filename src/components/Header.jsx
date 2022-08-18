@@ -12,7 +12,8 @@ const Header = () => {
   return (
     <SHeader>
       <SLogo onClick={() => navigate("/")}></SLogo>
-      <button onClick={logout}>로그아웃</button>
+      <SChat href="http://wetube-phenomenonlee.shop/socket">채팅방</SChat>
+      <LogoutBtn onClick={logout}>로그아웃</LogoutBtn>
     </SHeader>
   );
 };
@@ -28,8 +29,9 @@ const SHeader = styled.header`
   padding: 10px;
   box-sizing: border-box;
   justify-content: space-between;
-  border: 2px solid black;
+  border: 1px solid gray;
   height: 120px;
+  background-color: #fff;
 `;
 
 const SLogo = styled.div`
@@ -38,7 +40,20 @@ const SLogo = styled.div`
   margin-left: 10px;
   width: 100px;
   height: 100px;
-  border: 2px solid blue;
   background-image: url("/assets/images/heylogo.png");
   background-size: cover;
+`;
+
+const SChat = styled.a`
+  cursor: pointer;
+  background-color: #fff;
+`;
+
+const LogoutBtn = styled.button`
+  border: 1px solid red;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-color: red;
+  color: #fff;
+  padding: 3px;
 `;

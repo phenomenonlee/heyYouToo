@@ -4,6 +4,7 @@ import React from "react";
 import Header from "../components/Header";
 import Postlist from "../components/Postlist";
 import PostModal from "../components/PostModal";
+import CardList from "../components/InfiniteScroll";
 
 const Main = () => {
   return (
@@ -12,9 +13,12 @@ const Main = () => {
         <Header />
         <SMain>
           <PostModal />
-          <div style={{ width: "100%", overflow: "auto" }}>
-            <div style={{ height: "500px" }}>
+          <div
+            style={{ width: "100%", overflow: "auto", backgroundColor: "#fff" }}
+          >
+            <div style={{ height: "500px", backgroundColor: "#fff" }}>
               <Postlist />
+              {/* <CardList /> */}
             </div>
           </div>
         </SMain>
@@ -34,7 +38,7 @@ const SMain = styled.div`
   width: 100%;
   height: calc(100% - 120px);
   padding: 10px;
-  border: 2px solid green;
+  background-color: #fff;
   flex-direction: column;
   align-items: center;
   display: flex;
