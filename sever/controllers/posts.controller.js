@@ -15,6 +15,7 @@ class PostsController {
         res.send();
     }; */
 
+    // 데이터베이스의 저장되어 있는 모든 게시글을 가지고 옴
     findAllPost = async (req, res) => {
         const allPost = await this.postsService.findAllPost();
 
@@ -112,7 +113,7 @@ class PostsController {
 
     findOnePost = async (req, res) => {
         const { postId } = req.params;
-        const { secretKey } = req.body;
+        /* const { secretKey } = req.body; */
 
         /*         const commentToken = jwt.sign(
             {
