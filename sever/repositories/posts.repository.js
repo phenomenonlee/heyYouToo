@@ -16,9 +16,8 @@ class PostsRepositroy {
         return { allPostData, findAllPostLike };
     };
 
-    createPost = async (hashpassword, title, content, nickname, userId) => {
+    createPost = async (title, content, nickname, userId) => {
         await Post.create({
-            secretkey: hashpassword,
             title,
             content,
             nickname,

@@ -2,8 +2,8 @@ const { Post, User } = require("../../models");
 const bcrypt = require("bcrypt");
 
 class PostVerify {
-    veerifyBody = (secretKey, title, content) => {
-        if (secretKey && title && content) {
+    veerifyBody = (title, content) => {
+        if (title && content) {
             return true;
         } else {
             return false;
