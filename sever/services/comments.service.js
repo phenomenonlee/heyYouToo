@@ -4,6 +4,7 @@ class CommentsService {
     commentsRepository = new CommentsRepository();
 
     //댓글 조회
+    /* findAllcomment로 postId를 보내서 repository에서 allComment 데이터를 받아온 뒤 reverse()로 최신순으로 정렬한다 */
     findAllcomment = async (postId) => {
         const allComment = await this
             .commentsRepository
