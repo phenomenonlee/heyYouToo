@@ -3,13 +3,11 @@ import Header from "../components/Header";
 import styled from "styled-components";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setCookie } from "../util/cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
   const [userIdError, setuserIdError] = useState(false);
@@ -63,13 +61,13 @@ const Login = () => {
         <SMain>
           <SLoginBox>
             <SIdInput
-              placeholder="id"
+              placeholder="아이디"
               value={userId}
               onChange={onChangeUserId}
             />
             {userIdError && <SignupInput>이메일 형식으로 써주세요</SignupInput>}
             <SPwInput
-              placeholder="password"
+              placeholder="패스워드"
               type="password"
               minLength={8}
               value={userPw}
@@ -104,7 +102,6 @@ const SMain = styled.div`
   width: 100%;
   height: calc(100% - 120px);
   padding: 10px;
-  border: 1px solid gray;
   flex-direction: column;
   align-items: center;
   display: flex;
@@ -123,6 +120,8 @@ const SLoginBox = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   align-items: center;
   justify-content: center;
+  background-color: skyblue;
+  opacity: 90%;
 `;
 
 const SIdInput = styled.input`
@@ -147,6 +146,7 @@ const SLoginBtnSet = styled.div`
   display: flex;
   margin-top: 50px;
   gap: 40px;
+  background-color: skyblue;
 `;
 
 const LoginBtn = styled.button`
@@ -156,6 +156,7 @@ const LoginBtn = styled.button`
   height: 30px;
   border-radius: 5px;
   font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 `;
 
 const SignupBtn = styled.button`
@@ -166,6 +167,7 @@ const SignupBtn = styled.button`
   height: 30px;
   border-radius: 5px;
   font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 `;
 
 const SignupInput = styled.span`
@@ -174,4 +176,5 @@ const SignupInput = styled.span`
   line-height: 0em;
   margin-left: 15px;
   margin-top: 10px;
+  font-weight: bold;
 `;

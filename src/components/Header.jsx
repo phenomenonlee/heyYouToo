@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <SHeader>
       <SLogo onClick={() => navigate("/")}></SLogo>
-      <SChat href="http://wetube-phenomenonlee.shop/socket">채팅방</SChat>
+      <SChat href="http://wetube-phenomenonlee.shop/socket"></SChat>
       <LogoutBtn onClick={logout}>로그아웃</LogoutBtn>
     </SHeader>
   );
@@ -29,31 +29,45 @@ const SHeader = styled.header`
   padding: 10px;
   box-sizing: border-box;
   justify-content: space-between;
-  border: 1px solid gray;
+  border-bottom: none;
   height: 120px;
-  background-color: #fff;
+  background-color: skyblue;
 `;
 
 const SLogo = styled.div`
   cursor: pointer;
   padding: 10px;
   margin-left: 10px;
-  width: 100px;
-  height: 100px;
-  background-image: url("/assets/images/heylogo.png");
+  width: 150px;
+  height: 50px;
+  background-image: url("/assets/images/logo.png");
   background-size: cover;
+  border-radius: 5px;
 `;
 
 const SChat = styled.a`
   cursor: pointer;
-  background-color: #fff;
+  background-color: skyblue;
+  color: red;
+  background: url("https://www.starbucks.co.kr/common/img/common/icon_user_m.png");
+  background-size: cover;
+  height: 30px;
+  left: 18px;
+  top: 14px;
+  width: 25px;
+  margin-right: 25px;
 `;
 
 const LogoutBtn = styled.button`
-  border: 1px solid red;
   border-radius: 5px;
   margin-right: 10px;
   background-color: red;
   color: #fff;
   padding: 3px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #fff;
+    color: red;
+  }
 `;

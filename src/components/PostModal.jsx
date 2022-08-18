@@ -43,7 +43,7 @@ const PostModal = () => {
 
   return (
     <SPosthead ref={postRef}>
-      나는 어디로가야하온
+      여러분의 게시물을 작성해주세요!
       <button
         onClick={() => {
           setModal(true);
@@ -116,16 +116,19 @@ const SPosthead = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
+  font-weight: bold;
 
   & button {
-    border: 1px solid black;
     border-radius: 15px;
     width: 100px;
     height: 30px;
-    background-color: skyblue;
+    background-color: pink;
+    color: red;
+    font-weight: bold;
 
     &:hover {
-      background-color: #c3171d;
+      background-color: skyblue;
+      color: white;
     }
   }
 `;
@@ -147,7 +150,7 @@ const ModalBox = styled.div`
   background-color: #fff;
   position: relative;
   width: 50%;
-  height: 45%;
+  height: 40%;
   max-width: 400px;
   min-height: 100px;
   display: flex;
@@ -161,18 +164,20 @@ const ModalBox = styled.div`
 
 const InputOne = styled.input`
   margin-top: 10px;
-  border: 1px solid black;
   width: 300px;
   height: 30px;
   transform: translateY(50%);
+  background-color: skyblue;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
 `;
 
 const InputTwo = styled.input`
   margin-top: 10px;
-  border: 1px solid black;
   width: 300px;
   height: 180px;
   transform: translateY(15%);
+  background-color: skyblue;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
 `;
 
 // const InputThree = styled.input`
@@ -187,8 +192,9 @@ const ModalBtnSet = styled.div`
   text-align: space-between;
   margin-top: 20px;
   transform: translateY(120%);
+  background-color: #fff;
 `;
 
 const PostSubmitBtn = styled.button`
-  background-color: azure;
+  background-color: #fff;
 `;

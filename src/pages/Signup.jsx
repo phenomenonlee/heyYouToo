@@ -44,6 +44,7 @@ const Signup = () => {
         { id: data.id }
       );
       console.log(response);
+      alert("사용가능한아이디입니다");
     } catch (err) {
       alert("중복된아이디입니다");
     }
@@ -118,7 +119,6 @@ const Signup = () => {
   };
   return (
     <Layout>
-      <Header />
       <BodyStyle>
         <h1> 회원가입 </h1>
         <ContainerStyle>
@@ -190,7 +190,8 @@ const ContainerStyle = styled.div`
   padding: 1.2rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
-  background: linear-gradient(#9db8bf, #9ccddb5e);
+  /* background: linear-gradient(#9db8bf, #9ccddb5e); */
+  background-color: skyblue;
 `;
 
 const ContentStyle = styled.div`
@@ -203,7 +204,8 @@ const ContentStyle = styled.div`
     height: 35px;
     width: 15em;
   }
-  background: linear-gradient(#9db8bf, #9ccddb5e);
+  /* background: linear-gradient(#9db8bf, #9ccddb5e); */
+  background-color: skyblue;
 `;
 
 const SingUpBoxStyle = styled.div`
@@ -211,13 +213,15 @@ const SingUpBoxStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(#9db8bf, #9ccddb5e);
+  /* background: linear-gradient(#9db8bf, #9ccddb5e); */
+  background-color: skyblue;
   margin-top: 50px;
 `;
 
 const EmailCheckStyle = styled.div`
   display: flex;
-  background: linear-gradient(#9db8bf, #9ccddb5e);
+  /* background: linear-gradient(#9db8bf, #9ccddb5e); */
+  background-color: skyblue;
 `;
 
 const ButtonGroup = styled.div`
@@ -229,29 +233,33 @@ const ButtonGroup = styled.div`
     height: 20px;
   }
   gap: 10px;
-  background: linear-gradient(#9db8bf, #9ccddb5e);
+  /* background: linear-gradient(#9db8bf, #9ccddb5e); */
+  background-color: skyblue;
 `;
 const RepeatButton = styled.button`
-  color: #fff;
+  color: tomato;
+  font-weight: bold;
   border-color: gray;
   border-radius: 5px;
-  background-color: tomato;
+  background-color: pink;
   height: 20px;
   width: 70px;
   margin-top: 17px;
 `;
 
 const SignupButton = styled.button`
-  color: #fff;
+  color: tomato;
   border-color: gray;
   border-radius: 5px;
-  background-color: tomato;
+  background-color: pink;
+  font-weight: bold;
 `;
 const CanButton = styled.button`
   color: tomato;
   border-color: tomato;
   background-color: #fff;
   border-radius: 5px;
+  font-weight: bold;
 `;
 
 const SignupInput = styled.span`

@@ -4,8 +4,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { __getPost } from "../redux/modules/postSlice";
 import { useNavigate } from "react-router-dom";
 import { forwardRef } from "react";
+import { useInView } from "react-intersection-observer";
 
 const Postlist = forwardRef((props, ref) => {
+  // const [lastRef, lastCard] = useInView({
+  //   threshold: 0.8,
+  //   triggerOnce: true,
+  // });
+  // const [page, setPage] = useState(0);
+  // useEffect(() => {
+  //   dispatch(__getPost(page));
+  // }, []);
+
+  // useEffect(() => {
+  //   if (lastCard && page < postList.length) setPage(page + 5);
+  // }, [lastCard]);
+
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.post.allPost);
   const navigate = useNavigate();
@@ -16,7 +30,7 @@ const Postlist = forwardRef((props, ref) => {
 
   return (
     <>
-      {postList?.map((list) => (
+      {postList?.map((list, i) => (
         <SList
           key={list.postId}
           onClick={() => {
