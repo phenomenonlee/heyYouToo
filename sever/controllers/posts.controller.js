@@ -124,14 +124,14 @@ class PostsController {
         const { postId } = req.params;
         const { secretKey } = req.body;
 
-        const commentToken = jwt.sign(
+        /*         const commentToken = jwt.sign(
             {
                 postId,
             },
             "hohoho"
         );
 
-        res.cookie("commentCookie", commentToken);
+        res.cookie("commentCookie", commentToken); */
 
         const verifysecretKey = await this.postVerify.verifysecretKey(
             secretKey,

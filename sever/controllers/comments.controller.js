@@ -10,14 +10,15 @@ class CommentsController {
         /* const verifyComment = jwt.verify(authorization, "hohoho"); */
 
         const { postId } = req.params;
-        if (verifyComment.postId !== postId) {
-            return res.status(404).json({ errorMessage: "권한이 없습니다." });
-        }
+
+        /*  if (verifyComment.postId !== postId) {
+            return res.status(400).json({ errorMessage: "권한이 없습니다." });
+        } */
 
         const comments = await this.commentsService.findAllcomment(postId);
 
         if (comments.length === 0) {
-            res.status(404).json({
+            res.status(400).json({
                 errorMessage: "댓글이 존재하지 않습니다.",
             });
             return;
